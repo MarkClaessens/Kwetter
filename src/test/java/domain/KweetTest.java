@@ -6,6 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,9 +24,8 @@ import static org.junit.Assert.*;
 public class KweetTest {
 
 
-
-    @Inject
-    private KweetDAO kd;
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence");
+    private EntityManager em = emf.createEntityManager();
 
     private User testuser1;
     private User testuser2;
@@ -48,8 +51,8 @@ public class KweetTest {
 
     @Test
     public void JPAtest(){
-        kd.save(testkweet1);
-        System.out.println(kd.allKweets());
+        em.persist(testkweet1);
+        System.out.println(em.createNamedQuery("kweet.all").getResultList());
     }
 
     @Test

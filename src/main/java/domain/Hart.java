@@ -1,14 +1,16 @@
 package domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 /**
  * Created by Slashy on 4-3-2017.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "hart.all", query = "SELECT h FROM Hart h"),
+        @NamedQuery(name = "hart.findbykweet", query = "SELECT h FROM Hart h WHERE h.kweet = :kweet"),
+        @NamedQuery(name = "hart.findbyuser", query = "SELECT h FROM Hart h WHERE h.user = :user")
+})
 public class Hart {
 
     @Id

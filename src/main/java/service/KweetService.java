@@ -3,6 +3,7 @@ package service;
 import dao.KweetDAO;
 import domain.Kweet;
 
+import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * Created by Mark on 7-3-2017.
  */
+@Model
 public class KweetService {
 
     @Inject
@@ -19,6 +21,8 @@ public class KweetService {
     public List<Kweet> allkweets(){
         return kd.allKweets();
     }
+
+    public Kweet getKweet(int id){return kd.getKweet(id);}
 
     //todo get mentions out of message? or add way to mention people
     public Kweet createKweet(String message){

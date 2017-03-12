@@ -7,6 +7,7 @@ import domain.User;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -15,20 +16,24 @@ import java.util.List;
 @Stateless
 public class HartDAO {
 
-    @PersistenceContext
-    EntityManager em;
+    @PersistenceContext(unitName = "persistence")
+    private EntityManager em;
 
     public List<Hart> allHarts(){
-        return em.createNamedQuery("Hart.all").getResultList();
-    }
-    //todo
-    public List<Hart> specificOnKweet(Kweet kweet){
-        return null;
+        return em.createNamedQuery("hart.all").getResultList();
     }
 
-    //todo
+    public List<Hart> specificOnKweet(Kweet kweet){
+        Query query = em.createNamedQuery("hart.findbykweet");
+        query.setParameter("kweet", kweet);
+        return query.getResultList();
+    }
+
+
     public List<Hart> specificOnUser(User user){
-        return null;
+        Query query = em.createNamedQuery("hart.findbyuser");
+        query.setParameter("user", user);
+        return query.getResultList();
     }
 
     public void save(Hart hart){em.persist(hart);}

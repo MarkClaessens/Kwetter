@@ -11,6 +11,10 @@ import java.util.List;
  * Created by Slashy on 4-3-2017.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "kweet.all", query = "SELECT k FROM Kweet k"),
+        @NamedQuery(name = "kweet.getKweet", query = "SELECT k FROM Kweet  k WHERE k.ID = :id")
+})
 public class Kweet {
 
     @Id

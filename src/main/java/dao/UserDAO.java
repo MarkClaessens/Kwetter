@@ -5,6 +5,7 @@ import domain.User;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -13,16 +14,23 @@ import java.util.List;
 @Stateless
 public class UserDAO {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "persistence")
     private EntityManager em;
 
     public List<User> allUsers(){
-        return em.createNamedQuery("User.all").getResultList();
+        return em.createNamedQuery("user.all").getResultList();
     }
 
-    //todo
+    public User getUser(String userName){
+        Query query = em.createNamedQuery("user.byUserName");
+        query.setParameter("userName", userName);
+        return (User)query.getSingleResult();
+
+    }
     public List<User> getSpecificFollowing(User user){
-        return null;
+        Query query = em.createNamedQuery("user.findfollowing");
+        query.setParameter("user", user);
+        return query.getResultList();
     }
 
     public void save(User user) {

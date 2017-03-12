@@ -1,8 +1,6 @@
 package domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +9,12 @@ import java.util.Set;
  * Created by Mark on 7-3-2017.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "user.all", query = "SELECT u FROM User u"),
+        @NamedQuery(name = "user.byUserName", query = "SELECT u FROM User u WHERE u.userName = :userName"),
+        @NamedQuery(name = "user.findfollowing", query = "SELECT u FROM User u WHERE u.following = :user")
+})
+
 public class User {
 
     @Id

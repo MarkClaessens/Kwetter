@@ -6,6 +6,6 @@ import javax.ws.rs.ApplicationPath;
 /**
  * Created by Slashy on 4-3-2017.
  */
-@ApplicationPath("api")
+@ApplicationPath("/")
 public class JAXRSconfig extends Application{
 }
