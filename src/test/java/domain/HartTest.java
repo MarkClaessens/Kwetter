@@ -27,9 +27,9 @@ public class HartTest {
 
     @Before
     public void setUp() throws Exception {
-        testuser1 = new User("Tom", "mot", ROLE.NORMAL_USER);
-        testuser2 = new User("Henk", "kneh", ROLE.NORMAL_USER);
-        testuser3 = new User("Bas", "sab", ROLE.NORMAL_USER);
+        testuser1 = new User("Tom", "mot",  new Group());
+        testuser2 = new User("Henk", "kneh", new Group());
+        testuser3 = new User("Bas", "sab",  new Group());
         Date date = new Date();
         testkweet1 = new Kweet("hoi",null, date);
         testkweet2 = new Kweet("Ik ben Mark",null, date);

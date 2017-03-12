@@ -18,9 +18,10 @@ import java.util.Set;
 public class User {
 
     @Id
+    @GeneratedValue
+    private int id;
     private String userName;
     private String passWord;
-    private ROLE role;
     private String bio;
     private String location;
     private String website;
@@ -32,10 +33,9 @@ public class User {
     private List<Kweet> kweets;
 
     public User(){}
-    public User(String userName, String passWord, ROLE role){
+    public User(String userName, String passWord, Group group){
         this.userName = userName;
         this.passWord = passWord;
-        this.role = role;
         this.bio = "";
         this.location = "";
         this.website = "";
@@ -58,14 +58,6 @@ public class User {
 
     public void setPassWord(String passWord) {
         this.passWord = passWord;
-    }
-
-    public ROLE getRole() {
-        return role;
-    }
-
-    public void setRole(ROLE role) {
-        this.role = role;
     }
 
     public List<User> getFollowers() {
@@ -135,7 +127,7 @@ public class User {
     }
     @Override
     public String toString(){
-        return "username: " + userName + ", role: " + role;
+        return "username: " + userName + ", group: ";
     }
 
 }

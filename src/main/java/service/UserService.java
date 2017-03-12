@@ -1,12 +1,14 @@
 package service;
 
 import dao.UserDAO;
+import domain.Group;
 import domain.Kweet;
-import domain.ROLE;
 import domain.User;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +36,9 @@ public class UserService {
 
     public User getUser(String userName){return ud.getUser(userName);}
 
-    public List<String> getUserDetails(User thisUser){
-        List<String> userDetails = new ArrayList<>();
-        userDetails.add(thisUser.getBio());
-        userDetails.add(thisUser.getLocation());
-        userDetails.add(thisUser.getWebsite());
-        return userDetails;
+    public String[] getUserDetails(User thisUser){
+        String[] s = new String[] {thisUser.getBio(), thisUser.getWebsite() , thisUser.getLocation()};
+        return s;
     }
 
     public boolean changeName(String thisUserName, String newUserName){
@@ -58,8 +57,12 @@ public class UserService {
     public User login(String userName, String passWord){
         List<User> users = ud.allUsers();
         for(User user : users){
-            if(user.getUserName().equals(userName) && user.getPassWord().equals(passWord)){
-                return user;
+            try {
+                if(user.getUserName().equals(userName) && user.getPassWord().equals(toSha256(passWord))){
+                    return user;
+                }
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
             }
         }
         return null;
@@ -82,9 +85,30 @@ public class UserService {
                 return null;
             }
         }
-        User user = new User(userName, passWord, ROLE.NORMAL_USER);
+        User user = null;
+        try {
+            user = new User(userName, toSha256(passWord), new Group());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         ud.save(user);
         return user;
+    }
+
+    private static String toSha256(String data) throws NoSuchAlgorithmException {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(data.getBytes());
+            return bytesToHex(md.digest());
+        } catch(Exception ex) {
+            return null;
+        }
+
+    }
+    private static String bytesToHex(byte[] bytes) {
+        StringBuffer result = new StringBuffer();
+        for (byte byt : bytes) result.append(Integer.toString((byt & 0xff) + 0x100, 16).substring(1));
+        return result.toString();
     }
 
 

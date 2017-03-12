@@ -24,16 +24,16 @@ public class UserTest {
 
     @Before
     public void setUp() throws Exception {
-        testuser1 = new User("Tom", "mot", ROLE.NORMAL_USER);
-        testuser2 = new User("Henk", "kneh", ROLE.NORMAL_USER);
-        testuser3 = new User("Bas", "sab", ROLE.NORMAL_USER);
-        testuser4 = new User("Klaas", "saalk", ROLE.NORMAL_USER);
-        testuser5 = new User("Kees", "seek", ROLE.NORMAL_USER);
-        testuser6 = new User("Jan", "naj", ROLE.ADMINISTRATOR_USER);
-        testuser7 = new User("Stef", "fets", ROLE.ADMINISTRATOR_USER);
-        testuser8 = new User("Jos", "soj", ROLE.ADMINISTRATOR_USER);
-        testuser9 = new User("Mark", "kram", ROLE.ADMINISTRATOR_USER);
-        testuser10 = new User("Karel", "lerak", ROLE.ADMINISTRATOR_USER);
+        testuser1 = new User("Tom", "mot", new Group());
+        testuser2 = new User("Henk", "kneh", new Group());
+        testuser3 = new User("Bas", "sab", new Group());
+        testuser4 = new User("Klaas", "saalk", new Group());
+        testuser5 = new User("Kees", "seek", new Group());
+        testuser6 = new User("Jan", "naj", new Group());
+        testuser7 = new User("Stef", "fets", new Group());
+        testuser8 = new User("Jos", "soj", new Group());
+        testuser9 = new User("Mark", "kram", new Group());
+        testuser10 = new User("Karel", "lerak", new Group());
     }
 
     @Test
@@ -73,98 +73,94 @@ public class UserTest {
     }
 
     @Test
-    public void getRole() throws Exception {
-        Assert.assertEquals("role incorrect", ROLE.NORMAL_USER, testuser5.getRole());
-        Assert.assertEquals("role incorrect", ROLE.ADMINISTRATOR_USER, testuser6.getRole());
-        Assert.assertNotEquals("role correct", ROLE.ADMINISTRATOR_USER, testuser5.getRole());
-        Assert.assertNotEquals("role correct", ROLE.NORMAL_USER, testuser6.getRole());
-    }
-
-    @Test
-    public void setRole() throws Exception {
-        Assert.assertEquals("Role incorrect",  ROLE.NORMAL_USER, testuser5.getRole());
-        testuser5.setRole(ROLE.ADMINISTRATOR_USER);
-        Assert.assertNotEquals("Role correct",  ROLE.NORMAL_USER, testuser5.getRole());
-        Assert.assertEquals("Role incorrect",  ROLE.ADMINISTRATOR_USER, testuser5.getRole());
-        Assert.assertNotEquals("Role correct",  ROLE.ADMINISTRATOR_USER, testuser6.getRole());
-        testuser6.setRole(ROLE.NORMAL_USER);
-        Assert.assertEquals("Role incorrect",  ROLE.NORMAL_USER, testuser6.getRole());
-        Assert.assertNotEquals("Role correct",  ROLE.ADMINISTRATOR_USER, testuser6.getRole());
-    }
-
-    @Test
     public void getFollowers() throws Exception {
-
-    }
-
-    @Test
-    public void addFollower() throws Exception {
-        Assert.assertEquals("role incorrect", ROLE.NORMAL_USER, testuser5.getRole());
-    }
-
-    @Test
-    public void removeFollower() throws Exception {
-
+        Assert.assertEquals("password incorrect", "sab", testuser3.getPassWord());
+        testuser3.setPassWord("sba");
+        Assert.assertEquals("password incorrect", "sba", testuser3.getPassWord());
+        Assert.assertNotEquals("password correct", "sab", testuser3.getPassWord());
+        Assert.assertNotEquals("password correct", "klaas", testuser4.getPassWord());
+        testuser4.setPassWord("slaak");
+        Assert.assertEquals("password incorrect", "slaak", testuser4.getPassWord());
+        Assert.assertNotEquals("password correct", "saalk", testuser4.getPassWord());
     }
 
     @Test
     public void getFollowing() throws Exception {
-
-    }
-
-    @Test
-    public void addFollowing() throws Exception {
-
-    }
-
-    @Test
-    public void removeFollowing() throws Exception {
-
+        Assert.assertEquals("password incorrect", "sab", testuser3.getPassWord());
+        testuser3.setPassWord("sba");
+        Assert.assertNotEquals("password correct", "sab", testuser3.getPassWord());
+        Assert.assertNotEquals("password correct", "klaas", testuser4.getPassWord());
+        testuser4.setPassWord("slaak");
+        Assert.assertEquals("password incorrect", "slaak", testuser4.getPassWord());
+        Assert.assertNotEquals("password correct", "saalk", testuser4.getPassWord());
     }
 
     @Test
     public void getKweets() throws Exception {
-
-    }
-
-    @Test
-    public void addKweet() throws Exception {
-
-    }
-
-    @Test
-    public void removeKweet() throws Exception {
-
+        Assert.assertEquals("password incorrect", "sab", testuser3.getPassWord());
+        testuser3.setPassWord("sba");
+        Assert.assertEquals("password incorrect", "sba", testuser3.getPassWord());
+        Assert.assertNotEquals("password correct", "klaas", testuser4.getPassWord());
+        testuser4.setPassWord("slaak");
+        Assert.assertEquals("password incorrect", "slaak", testuser4.getPassWord());
+        Assert.assertNotEquals("password correct", "saalk", testuser4.getPassWord());
     }
 
     @Test
     public void getBio() throws Exception {
-
+        testuser3.setBio("hoi");
+        Assert.assertEquals("password incorrect", "hoi", testuser3.getBio());
+        Assert.assertNotEquals("password correct", "hoi", testuser4.getBio());
     }
 
     @Test
     public void setBio() throws Exception {
-
+        Assert.assertEquals("bio incorrect", "", testuser3.getBio());
+        testuser3.setBio("sba");
+        Assert.assertEquals("bio incorrect", "sba", testuser3.getBio());
+        Assert.assertNotEquals("bio correct", "sab", testuser3.getBio());
+        Assert.assertEquals("bio correct", "", testuser4.getBio());
+        testuser4.setBio("slaak");
+        Assert.assertEquals("bio incorrect", "slaak", testuser4.getBio());
+        Assert.assertNotEquals("bio correct", "saalk", testuser4.getBio());
     }
 
     @Test
     public void getLocation() throws Exception {
-
+        testuser3.setLocation("hoi");
+        Assert.assertEquals("password incorrect", "hoi", testuser3.getLocation());
+        Assert.assertNotEquals("password correct", "hoi", testuser4.getLocation());
     }
 
     @Test
     public void setLocation() throws Exception {
-
+        Assert.assertEquals("location incorrect", "", testuser3.getLocation());
+        testuser3.setLocation("sba");
+        Assert.assertEquals("location incorrect", "sba", testuser3.getLocation());
+        Assert.assertNotEquals("location correct", "sab", testuser3.getLocation());
+        Assert.assertEquals("location correct", "", testuser4.getLocation());
+        testuser4.setLocation("slaak");
+        Assert.assertEquals("location incorrect", "slaak", testuser4.getLocation());
+        Assert.assertNotEquals("location correct", "saalk", testuser4.getLocation());
     }
 
     @Test
     public void getWebsite() throws Exception {
-
+        testuser3.setWebsite("hoi");
+        Assert.assertEquals("password incorrect", "hoi", testuser3.getWebsite());
+        Assert.assertNotEquals("password correct", "hoi", testuser4.getWebsite());
     }
 
     @Test
     public void setWebsite() throws Exception {
-
+        Assert.assertEquals("website incorrect", "", testuser3.getWebsite());
+        testuser3.setWebsite("sba");
+        Assert.assertEquals("website incorrect", "sba", testuser3.getWebsite());
+        Assert.assertNotEquals("website correct", "sab", testuser3.getWebsite());
+        Assert.assertEquals("website correct", "", testuser4.getWebsite());
+        testuser4.setWebsite("slaak");
+        Assert.assertEquals("website incorrect", "slaak", testuser4.getWebsite());
+        Assert.assertNotEquals("website correct", "saalk", testuser4.getWebsite());
     }
 
 }
