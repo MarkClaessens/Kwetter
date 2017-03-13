@@ -1,10 +1,13 @@
 package Boundary.rest;
 
 import domain.Kweet;
+import domain.User;
 import service.KweetService;
+import service.UserService;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.json.JsonObject;
 import javax.ws.rs.*;
 import java.util.List;
 
@@ -17,6 +20,9 @@ public class KweetResource {
     @Inject
     KweetService ks;
 
+    @Inject
+    UserService us;
+
     @GET
     @Produces("application/json")
     public List<Kweet> allkweets(){
@@ -27,8 +33,11 @@ public class KweetResource {
     @Path("/create")
     @Consumes("application/json")
     @Produces("application/json")
-    public Kweet createKweet(String message){
-            return ks.createKweet(message);
+    public Kweet createKweet(JsonObject in) {
+            User user = us.getUser(in.getString("userName"));
+            Kweet kweet = ks.createKweet(in.getString("message"));
+            user.addKweet(kweet);
+            return kweet;
     }
 
     @GET
@@ -39,9 +48,5 @@ public class KweetResource {
         return ks.searchKweet(message);
     }
 
-    @DELETE
-    @Path("/delete/{id}")
-    public void deleteKweet(@PathParam("id") int id) {
-        ks.deleteKweet(ks.getKweet(id));
-    }
+
 }

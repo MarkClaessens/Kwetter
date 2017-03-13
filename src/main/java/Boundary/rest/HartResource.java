@@ -7,6 +7,7 @@ import service.UserService;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import java.util.List;
@@ -36,8 +37,8 @@ public class HartResource {
     @PUT
     @Path("like/{id}")
     @Consumes("application/json")
-    public boolean likeDislike(@PathParam("id") int kweetId, String userName){
-        return hs.likeDislike(ks.getKweet(kweetId), us.getUser(userName));
+    public boolean likeDislike(@PathParam("id") int kweetId, JsonObject in){
+        return hs.likeDislike(ks.getKweet(kweetId), us.getUser(in.getString("userName")));
     }
 
     @GET
@@ -58,7 +59,7 @@ public class HartResource {
     @POST
     @Path("/create/{id}")
     @Consumes("application/json")
-    public void createHart(@PathParam("id") int id, String userName){
-        hs.createHart(ks.getKweet(id), us.getUser(userName));
+    public void createHart(@PathParam("id") int id, JsonObject in){
+        hs.createHart(ks.getKweet(id), us.getUser(in.getString("userName")));
     }
 }

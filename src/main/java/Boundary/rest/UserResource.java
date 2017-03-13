@@ -41,7 +41,7 @@ public class UserResource {
     @Path("/details/{userName}")
     @Produces("application/json")
     //@RolesAllowed("User")
-    public String[] getUserDetails(@PathParam("userName") String userName){
+    public String getUserDetails(@PathParam("userName") String userName){
         User user = us.getUser(userName);
         return us.getUserDetails(user);
     }
@@ -50,9 +50,9 @@ public class UserResource {
     @Path("/changename/{userName}")
     @Consumes("application/json")
     @Produces("application/json")
-    public boolean changeName(@PathParam("userName") String userName, JsonObject in){
-        String oldName = in.getString("oldName");
-        return us.changeName(userName, oldName);
+    public User changeName(@PathParam("userName") String userName, JsonObject in){
+        String newName = in.getString("oldName");
+        return us.changeName(userName, newName);
     }
 
     @POST

@@ -24,7 +24,7 @@ public class KweetService {
 
     public Kweet getKweet(int id){return kd.getKweet(id);}
 
-    //todo get mentions out of message? or add way to mention people
+
     public Kweet createKweet(String message){
         Kweet kweet = new Kweet(message, null, new Date());
         kd.save(kweet);
@@ -40,9 +40,5 @@ public class KweetService {
             }
         }
         return kweets;
-    }
-
-    public void deleteKweet(Kweet kweet){
-        kd.delete(kweet);
     }
 }

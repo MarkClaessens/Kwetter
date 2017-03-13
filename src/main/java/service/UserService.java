@@ -36,22 +36,22 @@ public class UserService {
 
     public User getUser(String userName){return ud.getUser(userName);}
 
-    public String[] getUserDetails(User thisUser){
-        String[] s = new String[] {thisUser.getBio(), thisUser.getWebsite() , thisUser.getLocation()};
+    public String getUserDetails(User thisUser){
+        String s = "BIO: " + thisUser.getBio() + " Website: " + thisUser.getWebsite() + " Location: " + thisUser.getLocation();
         return s;
     }
 
-    public boolean changeName(String thisUserName, String newUserName){
+    public User changeName(String thisUserName, String newUserName){
         User thisUser = getUser(thisUserName);
         List<User> users = ud.allUsers();
         for(User user : users){
             if(user.getUserName().equals(newUserName)){
-                return false;
+                return null;
             }
         }
         thisUser.setUserName(newUserName);
         ud.save(thisUser);
-        return true;
+        return thisUser;
     }
 
     public User login(String userName, String passWord){
@@ -76,6 +76,11 @@ public class UserService {
             kweets.addAll(user.getKweets());
         }
         return kweets;
+    }
+
+    public void addKweet(User user, Kweet kweet){
+        user.addKweet(kweet);
+        ud.save(user);
     }
 
     public User createUser(String userName, String passWord){
