@@ -18,10 +18,20 @@ public class HartService {
     @Inject
     HartDAO hd;
 
+    /**
+     * return all harts
+     * @return
+     */
     public List<Hart> allharts(){
         return hd.allHarts();
     }
 
+    /**
+     * like or dislike a certain kweet with a user
+     * @param kweet
+     * @param user
+     * @return
+     */
     public boolean likeDislike(Kweet kweet, User user){
         List<Hart> harts = hd.specificOnKweet(kweet);
         for(Hart hart : harts){
@@ -35,10 +45,20 @@ public class HartService {
         return true;
     }
 
+    /**
+     * get all harts on specific kweet
+     * @param kweet
+     * @return
+     */
     public List<Hart> getKweetSpecific(Kweet kweet){
         return hd.specificOnKweet(kweet);
     }
 
+    /**
+     * get all harts of specific user
+     * @param user
+     * @return
+     */
     public List<Hart> getUserSpecific(User user){return hd.specificOnUser(user);}
 
     public void createHart(Kweet kweet, User user){

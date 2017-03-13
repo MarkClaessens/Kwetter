@@ -21,10 +21,19 @@ public class UserService {
     @Inject
     UserDAO ud;
 
+    /**
+     * get all users
+     * @return
+     */
     public List<User> allUsers(){
         return ud.allUsers();
     }
 
+    /**
+     * follow other user
+     * @param thisUserName
+     * @param otherUserName
+     */
     public void addFollower(String thisUserName, String otherUserName){
         User thisUser = getUser(thisUserName);
         User otherUser = getUser(otherUserName);
@@ -34,13 +43,29 @@ public class UserService {
         ud.save(otherUser);
     }
 
+    /**
+     * get user with username
+     * @param userName
+     * @return
+     */
     public User getUser(String userName){return ud.getUser(userName);}
 
+    /**
+     * get User details
+     * @param thisUser
+     * @return
+     */
     public String getUserDetails(User thisUser){
         String s = "BIO: " + thisUser.getBio() + " Website: " + thisUser.getWebsite() + " Location: " + thisUser.getLocation();
         return s;
     }
 
+    /**
+     * change name of user
+     * @param thisUserName
+     * @param newUserName
+     * @return
+     */
     public User changeName(String thisUserName, String newUserName){
         User thisUser = getUser(thisUserName);
         List<User> users = ud.allUsers();
@@ -54,6 +79,12 @@ public class UserService {
         return thisUser;
     }
 
+    /**
+     * login user
+     * @param userName
+     * @param passWord
+     * @return
+     */
     public User login(String userName, String passWord){
         List<User> users = ud.allUsers();
         for(User user : users){
@@ -68,6 +99,11 @@ public class UserService {
         return null;
     }
 
+    /**
+     * get all following tweets
+     * @param thisUser
+     * @return
+     */
     public List<Kweet> getFollowingTweets(User thisUser){
         List<User> users = ud.getSpecificFollowing(thisUser);
         List<Kweet> kweets = new ArrayList<>();
@@ -78,11 +114,22 @@ public class UserService {
         return kweets;
     }
 
+    /**
+     * add kweet to user
+     * @param user
+     * @param kweet
+     */
     public void addKweet(User user, Kweet kweet){
         user.addKweet(kweet);
         ud.save(user);
     }
 
+    /**
+     * create a user
+     * @param userName
+     * @param passWord
+     * @return
+     */
     public User createUser(String userName, String passWord){
         List<User> users = ud.allUsers();
         for(User user : users){
@@ -100,6 +147,12 @@ public class UserService {
         return user;
     }
 
+    /**
+     * password to SHA256
+     * @param data
+     * @return
+     * @throws NoSuchAlgorithmException
+     */
     private static String toSha256(String data) throws NoSuchAlgorithmException {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -110,6 +163,12 @@ public class UserService {
         }
 
     }
+
+    /**
+     * bytetohex password
+     * @param bytes
+     * @return
+     */
     private static String bytesToHex(byte[] bytes) {
         StringBuffer result = new StringBuffer();
         for (byte byt : bytes) result.append(Integer.toString((byt & 0xff) + 0x100, 16).substring(1));
