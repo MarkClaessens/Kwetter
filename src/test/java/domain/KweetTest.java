@@ -24,9 +24,9 @@ import static org.junit.Assert.*;
 public class KweetTest {
 
 
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("testpersistence");
+   /* private EntityManagerFactory emf = Persistence.createEntityManagerFactory("testpersistence");
 
-    private EntityManager em = emf.createEntityManager();
+    private EntityManager em = emf.createEntityManager();*/
 
     private User testuser1;
     private User testuser2;
@@ -50,11 +50,11 @@ public class KweetTest {
         testkweet3 = new Kweet("Ik",null, date);
     }
 
-    @Test
+    /*@Test
      public void JPAtest(){
         em.persist(testkweet1);
         System.out.println(em.createNamedQuery("kweet.all").getResultList());
-    }
+    }*/
 
     @Test
     public void getMessage() throws Exception {
